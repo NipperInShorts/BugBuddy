@@ -10,8 +10,9 @@ import SwiftUI
 @main
 struct BugsnagUploaderApp: App {
     var body: some Scene {
-        WindowGroup {
+        Window("Uploader Tool", id: "main") {
             ContentView()
+                .frame(minWidth: 400, minHeight: 500)
         }
     }
 }
