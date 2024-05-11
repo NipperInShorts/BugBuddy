@@ -10,18 +10,30 @@ import SwiftUI
 struct ContentView: View {
     
     @State private var isTargeted: Bool = false
+    @State private var progress: Double = 0
+    @State private var uploadTask: URLSessionUploadTask?
+    @State private var observation: NSKeyValueObservation?
+    @State private var showProgress: Bool = false
+    
+    private let total: Double = 1
     
     var body: some View {
         Text("Drop Dsyms to Upload")
             .font(.largeTitle)
             .padding(.top)
-            Spacer()
+        Spacer()
         VStack(alignment: .center) {
             Spacer()
-            Image(systemName: "folder.circle.fill")
-                .font(.largeTitle)
-                .imageScale(.large)
-                .foregroundStyle(.cyan)
+            if showProgress {
+                ProgressView("Uploading...", value: progress, total: total)
+                    .progressViewStyle(.linear)
+                    .padding()
+            } else {
+                Image(systemName: "folder.circle.fill")
+                    .font(.largeTitle)
+                    .imageScale(.large)
+                    .foregroundStyle(.cyan)
+            }
             Spacer()
         }
         .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
@@ -64,32 +76,51 @@ struct ContentView: View {
         .animation(.default, value: isTargeted)
         .padding()
     }
-}
-
-
-
-func uploadFile(data: Data) async {
-    let url = URL(string: "https://upload.bugsnag.com")!
-    var request = URLRequest(url: url)
-    let boundary = "Boundary-\(UUID().uuidString)"
-    request.httpMethod = "POST"
-    request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
     
-    let httpBody = NSMutableData()
-    httpBody.appendString(convertFormField(named: "apiKey", value: "d78570a7f97bfb30fe696ceb84d7312e", using: boundary))
+    private func uploadFile(data: Data) async {
+        
+        let url = URL(string: "https://upload.bugsnag.com")!
+        var request = URLRequest(url: url)
+        let boundary = "Boundary-\(UUID().uuidString)"
+        request.httpMethod = "POST"
+        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+        
+        let httpBody = NSMutableData()
+        httpBody.appendString(convertFormField(named: "apiKey", value: "d78570a7f97bfb30fe696ceb84d7312e", using: boundary))
+        
+        httpBody.append(convertFileData(fieldName: "dsym", fileName: "zipFile", mimeType: "application/octet-stream", fileData: data, using: boundary))
+        httpBody.appendString("--\(boundary)--")
+        
+        uploadTask = URLSession.shared.uploadTask(with: request, from: httpBody as Data) { data, _, _ in
+            guard let data = data else {  return }
+            DispatchQueue.main.async {
+                print("got the data: \(data)")
+                reset()
+            }
+        }
+        
+        observation = uploadTask?.progress.observe(\.fractionCompleted, changeHandler: { observationProgress, _ in
+            if (!showProgress) {
+                showProgress.toggle()
+            }
+            progress = observationProgress.fractionCompleted
+        })
+        
+        uploadTask?.resume()
+        
+        //    request.httpBody = httpBody as Data
+        
+    }
     
-    httpBody.append(convertFileData(fieldName: "dsym", fileName: "zipFile", mimeType: "application/octet-stream", fileData: data, using: boundary))
-    httpBody.appendString("--\(boundary)--")
-    
-    request.httpBody = httpBody as Data
-    
-    do {
-        let (data, _) = try await URLSession.shared.data(for: request)
-        print("GOT DATA: \(String(data: data, encoding: .utf8) ?? "NOT")")
-    } catch {
-        print(error)
+    private func reset() {
+        observation?.invalidate()
+        uploadTask?.cancel()
+        showProgress.toggle()
+        progress = 0
+        
     }
 }
+
 
 func convertFormField(named name: String, value: String, using boundary: String) -> String {
     var fieldString = "--\(boundary)\r\n"
