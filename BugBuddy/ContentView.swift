@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  BugsnagUploader
+//  BugBuddy
 //
 //  Created by Justin Nipper on 5/9/24.
 //
@@ -12,18 +12,17 @@ struct ContentView: View {
     @State private var isTargeted: Bool = false
     
     var body: some View {
+        Text("Drop Dsyms to Upload")
+            .font(.largeTitle)
+            .padding(.top)
+            Spacer()
         VStack(alignment: .center) {
-            Text("Drag Symbols to Upload")
-                .font(.largeTitle)
-                .padding()
             Spacer()
             Image(systemName: "folder.circle.fill")
                 .font(.largeTitle)
                 .imageScale(.large)
                 .foregroundStyle(.cyan)
-                .padding()
             Spacer()
-            
         }
         .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
         .onDrop(of: [.item], isTargeted: $isTargeted, perform: { providers in
@@ -59,6 +58,7 @@ struct ContentView: View {
                     .multilineTextAlignment(.center)
                 }
                 .frame(maxWidth: .infinity)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
             }
         }
         .animation(.default, value: isTargeted)

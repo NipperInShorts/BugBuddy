@@ -7,19 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A53741622BED3ED700FB81B3 /* BugsnagUploaderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53741612BED3ED700FB81B3 /* BugsnagUploaderApp.swift */; };
+		A53741622BED3ED700FB81B3 /* BugBuddyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53741612BED3ED700FB81B3 /* BugBuddyApp.swift */; };
 		A53741642BED3ED700FB81B3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53741632BED3ED700FB81B3 /* ContentView.swift */; };
 		A53741662BED3ED800FB81B3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A53741652BED3ED800FB81B3 /* Assets.xcassets */; };
 		A53741692BED3ED800FB81B3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A53741682BED3ED800FB81B3 /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		A537415E2BED3ED700FB81B3 /* BugsnagUploader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BugsnagUploader.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		A53741612BED3ED700FB81B3 /* BugsnagUploaderApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BugsnagUploaderApp.swift; sourceTree = "<group>"; };
+		A537415E2BED3ED700FB81B3 /* BugBuddy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BugBuddy.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A53741612BED3ED700FB81B3 /* BugBuddyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BugBuddyApp.swift; sourceTree = "<group>"; };
 		A53741632BED3ED700FB81B3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		A53741652BED3ED800FB81B3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A53741682BED3ED800FB81B3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		A537416A2BED3ED800FB81B3 /* BugsnagUploader.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BugsnagUploader.entitlements; sourceTree = "<group>"; };
+		A537416A2BED3ED800FB81B3 /* BugBuddy.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BugBuddy.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,7 +36,7 @@
 		A53741552BED3ED700FB81B3 = {
 			isa = PBXGroup;
 			children = (
-				A53741602BED3ED700FB81B3 /* BugsnagUploader */,
+				A53741602BED3ED700FB81B3 /* BugBuddy */,
 				A537415F2BED3ED700FB81B3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -44,21 +44,21 @@
 		A537415F2BED3ED700FB81B3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A537415E2BED3ED700FB81B3 /* BugsnagUploader.app */,
+				A537415E2BED3ED700FB81B3 /* BugBuddy.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		A53741602BED3ED700FB81B3 /* BugsnagUploader */ = {
+		A53741602BED3ED700FB81B3 /* BugBuddy */ = {
 			isa = PBXGroup;
 			children = (
-				A53741612BED3ED700FB81B3 /* BugsnagUploaderApp.swift */,
+				A53741612BED3ED700FB81B3 /* BugBuddyApp.swift */,
 				A53741632BED3ED700FB81B3 /* ContentView.swift */,
 				A53741652BED3ED800FB81B3 /* Assets.xcassets */,
-				A537416A2BED3ED800FB81B3 /* BugsnagUploader.entitlements */,
+				A537416A2BED3ED800FB81B3 /* BugBuddy.entitlements */,
 				A53741672BED3ED800FB81B3 /* Preview Content */,
 			);
-			path = BugsnagUploader;
+			path = BugBuddy;
 			sourceTree = "<group>";
 		};
 		A53741672BED3ED800FB81B3 /* Preview Content */ = {
@@ -72,9 +72,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A537415D2BED3ED700FB81B3 /* BugsnagUploader */ = {
+		A537415D2BED3ED700FB81B3 /* BugBuddy */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A537416D2BED3ED800FB81B3 /* Build configuration list for PBXNativeTarget "BugsnagUploader" */;
+			buildConfigurationList = A537416D2BED3ED800FB81B3 /* Build configuration list for PBXNativeTarget "BugBuddy" */;
 			buildPhases = (
 				A537415A2BED3ED700FB81B3 /* Sources */,
 				A537415B2BED3ED700FB81B3 /* Frameworks */,
@@ -84,9 +84,9 @@
 			);
 			dependencies = (
 			);
-			name = BugsnagUploader;
+			name = BugBuddy;
 			productName = BugsnagUploader;
-			productReference = A537415E2BED3ED700FB81B3 /* BugsnagUploader.app */;
+			productReference = A537415E2BED3ED700FB81B3 /* BugBuddy.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -104,7 +104,7 @@
 					};
 				};
 			};
-			buildConfigurationList = A53741592BED3ED700FB81B3 /* Build configuration list for PBXProject "BugsnagUploader" */;
+			buildConfigurationList = A53741592BED3ED700FB81B3 /* Build configuration list for PBXProject "BugBuddy" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -117,7 +117,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A537415D2BED3ED700FB81B3 /* BugsnagUploader */,
+				A537415D2BED3ED700FB81B3 /* BugBuddy */,
 			);
 		};
 /* End PBXProject section */
@@ -140,7 +140,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A53741642BED3ED700FB81B3 /* ContentView.swift in Sources */,
-				A53741622BED3ED700FB81B3 /* BugsnagUploaderApp.swift in Sources */,
+				A53741622BED3ED700FB81B3 /* BugBuddyApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,11 +270,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = BugsnagUploader/BugsnagUploader.entitlements;
+				CODE_SIGN_ENTITLEMENTS = BugBuddy/BugBuddy.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"BugsnagUploader/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"BugBuddy/Preview Content\"";
 				DEVELOPMENT_TEAM = F49V64PGFU;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -285,8 +287,9 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.justinnipper.BugsnagUploader;
+				PRODUCT_BUNDLE_IDENTIFIER = com.justinnipper.BugBuddy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -297,11 +300,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = BugsnagUploader/BugsnagUploader.entitlements;
+				CODE_SIGN_ENTITLEMENTS = BugBuddy/BugBuddy.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"BugsnagUploader/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"BugBuddy/Preview Content\"";
 				DEVELOPMENT_TEAM = F49V64PGFU;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -312,8 +317,9 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.justinnipper.BugsnagUploader;
+				PRODUCT_BUNDLE_IDENTIFIER = com.justinnipper.BugBuddy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -322,7 +328,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A53741592BED3ED700FB81B3 /* Build configuration list for PBXProject "BugsnagUploader" */ = {
+		A53741592BED3ED700FB81B3 /* Build configuration list for PBXProject "BugBuddy" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A537416B2BED3ED800FB81B3 /* Debug */,
@@ -331,7 +337,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A537416D2BED3ED800FB81B3 /* Build configuration list for PBXNativeTarget "BugsnagUploader" */ = {
+		A537416D2BED3ED800FB81B3 /* Build configuration list for PBXNativeTarget "BugBuddy" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A537416E2BED3ED800FB81B3 /* Debug */,
