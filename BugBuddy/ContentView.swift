@@ -18,7 +18,7 @@ struct ContentView: View {
     private let total: Double = 1
     
     var body: some View {
-        Text("Drop Dsyms to Upload")
+        Text("Drop dSYM file to Upload")
             .font(.largeTitle)
             .padding(.top)
         Spacer()
@@ -108,14 +108,11 @@ struct ContentView: View {
         
         uploadTask?.resume()
         
-        //    request.httpBody = httpBody as Data
-        
     }
     
     private func reset() {
         observation?.invalidate()
         uploadTask?.cancel()
-        showProgress.toggle()
         progress = 0
         
     }
