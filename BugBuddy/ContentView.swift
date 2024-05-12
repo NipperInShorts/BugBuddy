@@ -113,6 +113,7 @@ struct ContentView: View {
     private func reset() {
         observation?.invalidate()
         uploadTask?.cancel()
+        showProgress.toggle()
         progress = 0
         
     }
