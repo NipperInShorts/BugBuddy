@@ -10,9 +10,16 @@ import SwiftUI
 @main
 struct BugBuddy: App {
     var body: some Scene {
-        Window("Upload Symbols", id: "main") {
+        Window("Bug Buddy", id: "main") {
             ContentView()
-                .frame(minWidth: 400, minHeight: 500)
+            #if os(macOS)
+                .frame(minWidth: 500, minHeight: 500)
+            #endif
         }
+        #if os(macOS)
+        .commands {
+            SidebarCommands()
+        }
+        #endif
     }
 }

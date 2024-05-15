@@ -1,13 +1,18 @@
 //
-//  ContentView.swift
+//  UploadView.swift
 //  BugBuddy
 //
-//  Created by Justin Nipper on 5/9/24.
+//  Created by Justin Nipper on 5/13/24.
 //
 
 import SwiftUI
 
-struct ContentView: View {
+struct UploadView: View {
+    
+    @EnvironmentObject var navigationState: NavigationStateManager
+    @EnvironmentObject var dataModel: ModelDataManager
+    
+    private let total: Double = 1
     
     @State private var isTargeted: Bool = false
     @State private var progress: Double = 0
@@ -15,11 +20,24 @@ struct ContentView: View {
     @State private var observation: NSKeyValueObservation?
     @State private var showProgress: Bool = false
     
-    private let total: Double = 1
+    var greeting: String {
+        if let state = navigationState.selectionState {
+            switch state {
+            case .accounts(let account):
+                return "Drop dSYM file to Upload\n to \(account.title)"
+            
+            case .settings:
+                return "Drop dSYM file to Upload"
+            }
+        }
+        return "Drop dSYM file to Upload"
+    }
     
     var body: some View {
-        Text("Drop dSYM file to Upload")
-            .font(.largeTitle)
+        Text(greeting)
+            .frame(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+            .multilineTextAlignment(.center)
+            .font(.title)
             .padding(.top)
         Spacer()
         VStack(alignment: .center) {
@@ -76,7 +94,6 @@ struct ContentView: View {
         .animation(.default, value: isTargeted)
         .padding()
     }
-    
     private func uploadFile(data: Data) async {
         
         let url = URL(string: "https://upload.bugsnag.com")!
@@ -149,6 +166,9 @@ extension NSMutableData {
     }
 }
 
+
 #Preview {
-    ContentView()
+    UploadView()
+        .environmentObject(NavigationStateManager())
+        .environmentObject(ModelDataManager())
 }
