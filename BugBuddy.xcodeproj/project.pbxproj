@@ -16,6 +16,7 @@
 		A5EF6FD52BF460900014F79E /* NavigationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EF6FD42BF460900014F79E /* NavigationModel.swift */; };
 		A5EF6FD72BF470700014F79E /* AccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EF6FD62BF470700014F79E /* AccountModel.swift */; };
 		A5EF6FD92BF473850014F79E /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EF6FD82BF473850014F79E /* DetailView.swift */; };
+		A5EF6FDB2BF4F3930014F79E /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EF6FDA2BF4F3930014F79E /* SettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		A5EF6FD42BF460900014F79E /* NavigationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationModel.swift; sourceTree = "<group>"; };
 		A5EF6FD62BF470700014F79E /* AccountModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountModel.swift; sourceTree = "<group>"; };
 		A5EF6FD82BF473850014F79E /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
+		A5EF6FDA2BF4F3930014F79E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsView.swift; path = BugBuddy/Views/SettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,6 +48,7 @@
 		A53741552BED3ED700FB81B3 = {
 			isa = PBXGroup;
 			children = (
+				A5EF6FDA2BF4F3930014F79E /* SettingsView.swift */,
 				A53741602BED3ED700FB81B3 /* BugBuddy */,
 				A537415F2BED3ED700FB81B3 /* Products */,
 			);
@@ -171,6 +174,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A5EF6FCF2BF2610E0014F79E /* UploadView.swift in Sources */,
+				A5EF6FDB2BF4F3930014F79E /* SettingsView.swift in Sources */,
 				A5EF6FD72BF470700014F79E /* AccountModel.swift in Sources */,
 				A5EF6FD22BF3A0BC0014F79E /* SidebarView.swift in Sources */,
 				A5EF6FD92BF473850014F79E /* DetailView.swift in Sources */,

@@ -17,7 +17,7 @@ struct DetailView: View {
             case .accounts:
                 UploadView()
             case .settings:
-                Text("Settings")
+                SettingsView()
             }
             
         } else {

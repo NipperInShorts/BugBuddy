@@ -10,7 +10,7 @@ import SwiftUI
 struct SidebarView: View {
     
     @EnvironmentObject var navigationManager: NavigationStateManager
-    @EnvironmentObject var dataModel: ModelDataManager
+    @EnvironmentObject var dataModel: DataModel
     
     
     var body: some View {
@@ -44,5 +44,5 @@ struct SidebarView: View {
 #Preview {
     SidebarView()
         .environmentObject(NavigationStateManager())
-        .environmentObject(ModelDataManager())
+        .environmentObject(DataModel())
 }

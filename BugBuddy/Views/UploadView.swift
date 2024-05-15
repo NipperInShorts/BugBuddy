@@ -10,7 +10,7 @@ import SwiftUI
 struct UploadView: View {
     
     @EnvironmentObject var navigationState: NavigationStateManager
-    @EnvironmentObject var dataModel: ModelDataManager
+    @EnvironmentObject var dataModel: DataModel
     
     private let total: Double = 1
     
@@ -94,6 +94,7 @@ struct UploadView: View {
         .animation(.default, value: isTargeted)
         .padding()
     }
+    
     private func uploadFile(data: Data) async {
         
         let url = URL(string: "https://upload.bugsnag.com")!
@@ -170,5 +171,5 @@ extension NSMutableData {
 #Preview {
     UploadView()
         .environmentObject(NavigationStateManager())
-        .environmentObject(ModelDataManager())
+        .environmentObject(DataModel())
 }

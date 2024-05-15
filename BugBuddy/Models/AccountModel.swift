@@ -25,7 +25,7 @@ struct Account: Identifiable, Hashable, Codable {
     }
 }
 
-class ModelDataManager: ObservableObject {
+class DataModel: ObservableObject {
     
     @Published var accounts = Account.examples()
     
