@@ -19,9 +19,12 @@ struct DetailView: View {
             case .settings:
                 SettingsView()
             }
-            
         } else {
-            EmptyView()
+            ContentUnavailableView {
+                Text("Let's get started")
+            } description: {
+                Text("Choose an account from the sidebar\n or add one if none added")
+            }
         }
     }
 }

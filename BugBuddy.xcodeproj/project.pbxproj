@@ -11,6 +11,9 @@
 		A53741642BED3ED700FB81B3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53741632BED3ED700FB81B3 /* ContentView.swift */; };
 		A53741662BED3ED800FB81B3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A53741652BED3ED800FB81B3 /* Assets.xcassets */; };
 		A53741692BED3ED800FB81B3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A53741682BED3ED800FB81B3 /* Preview Assets.xcassets */; };
+		A5BEE8E92BF656660043C19E /* AccountDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BEE8E82BF656660043C19E /* AccountDetailView.swift */; };
+		A5BEE8EB2BF6572E0043C19E /* AddNewAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BEE8EA2BF6572E0043C19E /* AddNewAccountView.swift */; };
+		A5BEE8ED2BF68B580043C19E /* AccountListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BEE8EC2BF68B580043C19E /* AccountListView.swift */; };
 		A5EF6FCF2BF2610E0014F79E /* UploadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EF6FCE2BF2610E0014F79E /* UploadView.swift */; };
 		A5EF6FD22BF3A0BC0014F79E /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EF6FD12BF3A0BC0014F79E /* SidebarView.swift */; };
 		A5EF6FD52BF460900014F79E /* NavigationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EF6FD42BF460900014F79E /* NavigationModel.swift */; };
@@ -26,6 +29,9 @@
 		A53741652BED3ED800FB81B3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A53741682BED3ED800FB81B3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		A537416A2BED3ED800FB81B3 /* BugBuddy.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BugBuddy.entitlements; sourceTree = "<group>"; };
+		A5BEE8E82BF656660043C19E /* AccountDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AccountDetailView.swift; path = BugBuddy/Views/AccountDetailView.swift; sourceTree = "<group>"; };
+		A5BEE8EA2BF6572E0043C19E /* AddNewAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AddNewAccountView.swift; path = BugBuddy/Views/AddNewAccountView.swift; sourceTree = "<group>"; };
+		A5BEE8EC2BF68B580043C19E /* AccountListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AccountListView.swift; path = BugBuddy/Views/AccountListView.swift; sourceTree = "<group>"; };
 		A5EF6FCE2BF2610E0014F79E /* UploadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadView.swift; sourceTree = "<group>"; };
 		A5EF6FD12BF3A0BC0014F79E /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
 		A5EF6FD42BF460900014F79E /* NavigationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationModel.swift; sourceTree = "<group>"; };
@@ -48,6 +54,9 @@
 		A53741552BED3ED700FB81B3 = {
 			isa = PBXGroup;
 			children = (
+				A5BEE8EC2BF68B580043C19E /* AccountListView.swift */,
+				A5BEE8EA2BF6572E0043C19E /* AddNewAccountView.swift */,
+				A5BEE8E82BF656660043C19E /* AccountDetailView.swift */,
 				A5EF6FDA2BF4F3930014F79E /* SettingsView.swift */,
 				A53741602BED3ED700FB81B3 /* BugBuddy */,
 				A537415F2BED3ED700FB81B3 /* Products */,
@@ -173,12 +182,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5BEE8ED2BF68B580043C19E /* AccountListView.swift in Sources */,
 				A5EF6FCF2BF2610E0014F79E /* UploadView.swift in Sources */,
 				A5EF6FDB2BF4F3930014F79E /* SettingsView.swift in Sources */,
+				A5BEE8EB2BF6572E0043C19E /* AddNewAccountView.swift in Sources */,
 				A5EF6FD72BF470700014F79E /* AccountModel.swift in Sources */,
 				A5EF6FD22BF3A0BC0014F79E /* SidebarView.swift in Sources */,
 				A5EF6FD92BF473850014F79E /* DetailView.swift in Sources */,
 				A5EF6FD52BF460900014F79E /* NavigationModel.swift in Sources */,
+				A5BEE8E92BF656660043C19E /* AccountDetailView.swift in Sources */,
 				A53741642BED3ED700FB81B3 /* ContentView.swift in Sources */,
 				A53741622BED3ED700FB81B3 /* BugBuddyApp.swift in Sources */,
 			);

@@ -96,36 +96,56 @@ struct UploadView: View {
     }
     
     private func uploadFile(data: Data) async {
+        var account: Account?
+        var apiKey: String = ""
         
-        let url = URL(string: "https://upload.bugsnag.com")!
-        var request = URLRequest(url: url)
-        let boundary = "Boundary-\(UUID().uuidString)"
-        request.httpMethod = "POST"
-        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
-        
-        let httpBody = NSMutableData()
-        httpBody.appendString(convertFormField(named: "apiKey", value: "d78570a7f97bfb30fe696ceb84d7312e", using: boundary))
-        
-        httpBody.append(convertFileData(fieldName: "dsym", fileName: "zipFile", mimeType: "application/octet-stream", fileData: data, using: boundary))
-        httpBody.appendString("--\(boundary)--")
-        
-        uploadTask = URLSession.shared.uploadTask(with: request, from: httpBody as Data) { data, _, _ in
-            guard let data = data else {  return }
-            DispatchQueue.main.async {
-                print("got the data: \(data)")
-                reset()
+        if let state = navigationState.selectionState {
+            switch state {
+            case .accounts(let enumAccount):
+                account = enumAccount
+            case .settings:
+                break;
             }
         }
         
-        observation = uploadTask?.progress.observe(\.fractionCompleted, changeHandler: { observationProgress, _ in
-            if (!showProgress) {
-                showProgress.toggle()
+        if let account = account {
+            
+            do {
+                apiKey = try account.getApiKey(account: account.title)
+                print(apiKey)
+            } catch {
+                print(error)
+                
             }
-            progress = observationProgress.fractionCompleted
-        })
-        
-        uploadTask?.resume()
-        
+            let url = URL(string: "https://upload.bugsnag.com")!
+            var request = URLRequest(url: url)
+            let boundary = "Boundary-\(UUID().uuidString)"
+            request.httpMethod = "POST"
+            request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+            
+            let httpBody = NSMutableData()
+            httpBody.appendString(convertFormField(named: "apiKey", value: apiKey, using: boundary))
+            
+            httpBody.append(convertFileData(fieldName: "dsym", fileName: "zipFile", mimeType: "application/octet-stream", fileData: data, using: boundary))
+            httpBody.appendString("--\(boundary)--")
+            
+            uploadTask = URLSession.shared.uploadTask(with: request, from: httpBody as Data) { data, _, _ in
+                guard let data = data else {  return }
+                DispatchQueue.main.async {
+                    print("got the data: \(data)")
+                    reset()
+                }
+            }
+            
+            observation = uploadTask?.progress.observe(\.fractionCompleted, changeHandler: { observationProgress, _ in
+                if (!showProgress) {
+                    showProgress.toggle()
+                }
+                progress = observationProgress.fractionCompleted
+            })
+            
+            uploadTask?.resume()
+        }
     }
     
     private func reset() {

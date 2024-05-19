@@ -21,6 +21,9 @@ struct SidebarView: View {
                         Text(account.title)
                             .tag(SelectionState.accounts(account))
                     }
+                    if (dataModel.accounts.isEmpty) {
+                        Text("Add accounts below")
+                    }
                 }
             }
             Spacer()
