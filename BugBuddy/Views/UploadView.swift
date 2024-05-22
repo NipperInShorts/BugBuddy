@@ -19,6 +19,8 @@ struct UploadView: View {
     @State private var uploadTask: URLSessionUploadTask?
     @State private var observation: NSKeyValueObservation?
     @State private var showProgress: Bool = false
+    @State private var processingFile: Bool = false
+    @State private var fileProgress: Double = 0
     
     var greeting: String {
         if let state = navigationState.selectionState {
@@ -46,6 +48,10 @@ struct UploadView: View {
                 ProgressView("Uploading...", value: progress, total: total)
                     .progressViewStyle(.linear)
                     .padding()
+            } else if processingFile {
+                ProgressView("Validating file...", value: fileProgress, total: total)
+                    .progressViewStyle(.circular)
+                    .padding()
             } else {
                 Image(systemName: "folder.circle.fill")
                     .font(.largeTitle)
@@ -56,15 +62,27 @@ struct UploadView: View {
         }
         .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
         .onDrop(of: [.item], isTargeted: $isTargeted, perform: { providers in
-            guard let provider = providers.first else { return false }
-            
+            processingFile = true
+            fileProgress = 0.1
+            guard let provider = providers.first else {
+                fileProgress = 1.0
+                processingFile = false
+                return false
+            }
+            fileProgress = 0.6
             _ = provider.loadDataRepresentation(for: .item) { data, error in
                 if error == nil, let data {
                     DispatchQueue.main.async {
-                        print(data.description)
                         Task {
+                            fileProgress = 1.0
+                            processingFile = false
                             await uploadFile(data: data)
                         }
+                    }
+                } else {
+                    Task { @MainActor in
+                        fileProgress = 1.0
+                        processingFile = false
                     }
                 }
             }
@@ -130,18 +148,19 @@ struct UploadView: View {
             httpBody.appendString("--\(boundary)--")
             
             uploadTask = URLSession.shared.uploadTask(with: request, from: httpBody as Data) { data, _, _ in
-                guard let data = data else {  return }
+                guard data != nil else {  return }
                 DispatchQueue.main.async {
-                    print("got the data: \(data)")
                     reset()
                 }
             }
             
             observation = uploadTask?.progress.observe(\.fractionCompleted, changeHandler: { observationProgress, _ in
-                if (!showProgress) {
-                    showProgress.toggle()
+                Task { @MainActor in
+                    if (!showProgress) {
+                        showProgress.toggle()
+                    }
+                    progress = observationProgress.fractionCompleted
                 }
-                progress = observationProgress.fractionCompleted
             })
             
             uploadTask?.resume()
