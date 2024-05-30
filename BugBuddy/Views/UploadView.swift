@@ -57,9 +57,6 @@ struct UploadView: View {
                 .padding(.top)
             Spacer()
             VStack(alignment: .center) {
-                Text(alertModel.alertTitle)
-                Text(alertModel.alertMessage)
-                Text("\(alertModel.alertPresented)")
                 Spacer()
                 if showProgress {
                     ProgressView("Uploading...", value: progress, total: total)
