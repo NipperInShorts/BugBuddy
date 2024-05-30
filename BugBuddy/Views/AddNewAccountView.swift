@@ -19,8 +19,17 @@ struct AddNewAccountView: View {
             Text("Add New Account")
                 .font(.largeTitle)
             Form {
-                TextField("Account Name", text: $account.title)
-                SecureField("API Key", text: $apiKey)
+                Section(content: {
+                    TextField("Account Name", text: $account.title)
+                    SecureField("API Key", text: $apiKey)
+                }, footer: {
+                    Text("Your API key is stored within Keychain and not persisted within the app.")
+                        .font(.callout)
+                        .padding(.top, 4)
+                        .foregroundStyle(.secondary)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .multilineTextAlignment(.center)
+                })
             }
             .onSubmit {
                 if (!apiKey.isEmpty) {
@@ -28,7 +37,6 @@ struct AddNewAccountView: View {
                         do {
                             try account.saveApiKey(for: apiKey, service: "bugsnag", account: account.title)
                         } catch {
-                            print("Failed to save \(error)")
                         }
                         navigationModel.navigateTo(account: account)
                     }

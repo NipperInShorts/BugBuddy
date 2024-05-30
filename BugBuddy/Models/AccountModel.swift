@@ -62,7 +62,7 @@ struct Account: Identifiable, Hashable, Codable {
             throw KeychainError.unexpectedPasswordData
         }
         let credentials = Credentials(apiKey: apiKey)
-        print("Failed to get internal \(credentials)")
+
         return credentials.apiKey
     }
     
@@ -79,8 +79,6 @@ struct Account: Identifiable, Hashable, Codable {
         let status = SecItemAdd(query as CFDictionary, nil)
         
         guard status == errSecSuccess else { throw KeychainError.unhandledError(status: status) }
-        
-        print("internal \(status)")
     }
     
     func deleteApiKey(account: String, service: String) throws {
@@ -93,9 +91,6 @@ struct Account: Identifiable, Hashable, Codable {
         
         let status = SecItemDelete(query as CFDictionary)
         guard status == errSecSuccess || status == errSecItemNotFound else { throw KeychainError.unhandledError(status: status) }
-        
-        print("Failed to delete internal \(status)")
-
     }
     
 }

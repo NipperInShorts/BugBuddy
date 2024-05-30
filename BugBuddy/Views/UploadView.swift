@@ -161,10 +161,7 @@ struct UploadView: View {
             
             do {
                 apiKey = try account.getApiKey(account: account.title)
-                print(apiKey)
             } catch {
-                print(error)
-                
             }
             let url = URL(string: "https://upload.bugsnag.com")!
             var request = URLRequest(url: url)

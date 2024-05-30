@@ -19,9 +19,7 @@ struct AccountDetailView: View {
     func getApiKey() {
         do {
             apiKey = try account.getApiKey(account: account.title)
-            print(apiKey)
         } catch {
-            print(error)
             apiKey = "nothing"
         }
         
@@ -48,6 +46,12 @@ struct AccountDetailView: View {
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
+            Text("Your API key is stored within Keychain. Removing it from here will also remove it from Kychain.")
+                .font(.callout)
+                .padding(.top, 4)
+                .foregroundStyle(.secondary)
+                .frame(maxWidth: .infinity, alignment: .center)
+                .multilineTextAlignment(.center)
             Spacer()
             Button(action: {
                 do {
@@ -78,7 +82,7 @@ struct AccountDetailView: View {
             // it's possible, so go ahead and use it
             let reason = "We use Biometrics to show/hide your API key."
 
-            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, authenticationError in
+            context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason) { success, authenticationError in
                 // authentication has now completed
                 DispatchQueue.main.async {
                     if success {
@@ -91,6 +95,7 @@ struct AccountDetailView: View {
             }
         } else {
             // no biometrics
+            
         }
     }
 }
