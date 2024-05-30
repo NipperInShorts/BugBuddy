@@ -7,10 +7,20 @@
 
 import SwiftUI
 
+class AlertView: ObservableObject {
+    
+    @Published var alertTitle: String = ""
+    @Published var alertPresented: Bool = false
+    @Published var alertMessage: String = ""
+    
+}
+
 struct UploadView: View {
     
     @EnvironmentObject var navigationState: NavigationStateManager
     @EnvironmentObject var dataModel: DataModel
+    
+    @ObservedObject private var alertModel = AlertView()
     
     private let total: Double = 1
     
@@ -22,12 +32,15 @@ struct UploadView: View {
     @State private var processingFile: Bool = false
     @State private var fileProgress: Double = 0
     
+
+    @State private var buttonTitle: String = "OK"
+    
     var greeting: String {
         if let state = navigationState.selectionState {
             switch state {
             case .accounts(let account):
                 return "Drop dSYM file to Upload\n to \(account.title)"
-            
+                
             case .settings:
                 return "Drop dSYM file to Upload"
             }
@@ -36,81 +49,99 @@ struct UploadView: View {
     }
     
     var body: some View {
-        Text(greeting)
-            .frame(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-            .multilineTextAlignment(.center)
-            .font(.title)
-            .padding(.top)
-        Spacer()
-        VStack(alignment: .center) {
+        VStack {
+            Text(greeting)
+                .frame(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                .multilineTextAlignment(.center)
+                .font(.title)
+                .padding(.top)
             Spacer()
-            if showProgress {
-                ProgressView("Uploading...", value: progress, total: total)
-                    .progressViewStyle(.linear)
-                    .padding()
-            } else if processingFile {
-                ProgressView("Validating file...", value: fileProgress, total: total)
-                    .progressViewStyle(.circular)
-                    .padding()
-            } else {
-                Image(systemName: "folder.circle.fill")
-                    .font(.largeTitle)
-                    .imageScale(.large)
-                    .foregroundStyle(.cyan)
+            VStack(alignment: .center) {
+                Text(alertModel.alertTitle)
+                Text(alertModel.alertMessage)
+                Text("\(alertModel.alertPresented)")
+                Spacer()
+                if showProgress {
+                    ProgressView("Uploading...", value: progress, total: total)
+                        .progressViewStyle(.linear)
+                        .padding()
+                } else if processingFile {
+                    ProgressView("Validating file...", value: fileProgress, total: total)
+                        .progressViewStyle(.circular)
+                        .padding()
+                } else {
+                    Image(systemName: "folder.circle.fill")
+                        .font(.largeTitle)
+                        .imageScale(.large)
+                        .foregroundStyle(.cyan)
+                }
+                Spacer()
             }
-            Spacer()
-        }
-        .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
-        .onDrop(of: [.item], isTargeted: $isTargeted, perform: { providers in
-            processingFile = true
-            fileProgress = 0.1
-            guard let provider = providers.first else {
-                fileProgress = 1.0
-                processingFile = false
-                return false
-            }
-            fileProgress = 0.6
-            _ = provider.loadDataRepresentation(for: .item) { data, error in
-                if error == nil, let data {
-                    DispatchQueue.main.async {
-                        Task {
+            .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
+            .onDrop(of: [.item], isTargeted: $isTargeted, perform: { providers in
+                processingFile = true
+                fileProgress = 0.1
+                guard let provider = providers.first else {
+                    fileProgress = 1.0
+                    processingFile = false
+                    return false
+                }
+                fileProgress = 0.6
+                _ = provider.loadDataRepresentation(for: .item) { data, error in
+                    if error == nil, let data {
+                        DispatchQueue.main.async {
+                            Task { @MainActor in
+                                fileProgress = 1.0
+                                processingFile.toggle()
+                                showProgress.toggle()
+                                await uploadFile(data: data)
+                            }
+                        }
+                    } else {
+                        Task { @MainActor in
                             fileProgress = 1.0
                             processingFile = false
-                            await uploadFile(data: data)
+                            
+                            alertModel.alertTitle = "Error Processing Files"
+                            alertModel.alertMessage = error?.localizedDescription ?? "Unable to process files.\n Try again"
+                            alertModel.alertPresented.toggle()
                         }
-                    }
-                } else {
-                    Task { @MainActor in
-                        fileProgress = 1.0
-                        processingFile = false
+                        
                     }
                 }
-            }
-            return true
-        })
-        .overlay {
-            if isTargeted {
-                ZStack {
-                    Color.black.opacity(0.7)
-                    
-                    VStack(spacing: 8) {
-                        Image(systemName: "plus.circle.fill")
-                            .font(.system(size: 60))
-                        Text("Drop your files here...")
+                return true
+            })
+            .overlay {
+                if isTargeted {
+                    ZStack {
+                        Color.black.opacity(0.7)
+                        
+                        VStack(spacing: 8) {
+                            Image(systemName: "plus.circle.fill")
+                                .font(.system(size: 60))
+                            Text("Drop your files here...")
+                        }
+                        .font(.largeTitle)
+                        .fontWeight(.heavy)
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .multilineTextAlignment(.center)
                     }
-                    .font(.largeTitle)
-                    .fontWeight(.heavy)
-                    .foregroundColor(.white)
                     .frame(maxWidth: .infinity)
-                    .padding()
-                    .multilineTextAlignment(.center)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
                 }
-                .frame(maxWidth: .infinity)
-                .clipShape(RoundedRectangle(cornerRadius: 10))
             }
+            .animation(.default, value: isTargeted)
+            .padding()
         }
-        .animation(.default, value: isTargeted)
-        .padding()
+        .alert(alertModel.alertTitle, isPresented: $alertModel.alertPresented, actions: {
+            Button(buttonTitle) {
+                alertModel.alertPresented.toggle()
+            }
+        }, message: {
+            Text(alertModel.alertMessage)
+        })
     }
     
     private func uploadFile(data: Data) async {
@@ -147,18 +178,36 @@ struct UploadView: View {
             httpBody.append(convertFileData(fieldName: "dsym", fileName: "zipFile", mimeType: "application/octet-stream", fileData: data, using: boundary))
             httpBody.appendString("--\(boundary)--")
             
-            uploadTask = URLSession.shared.uploadTask(with: request, from: httpBody as Data) { data, _, _ in
+            uploadTask = URLSession.shared.uploadTask(with: request, from: httpBody as Data) { data, response, error in
+                if let httpResponse = response as? HTTPURLResponse {
+                    Task { @MainActor in
+                        if httpResponse.statusCode == 401 {
+                            alertModel.alertTitle = "Error Uploading Files"
+                            alertModel.alertMessage = "Unauthorized.\nValidate API Key and try again"
+                            alertModel.alertPresented = true
+                        }
+                        
+                    }
+                }
+                if error != nil {
+                    Task { @MainActor in
+                        alertModel.alertTitle = "Error Uploading Files"
+                        alertModel.alertMessage = error?.localizedDescription ?? "Unable to upload files.\n Try again."
+                        alertModel.alertPresented = true
+                    }
+                }
                 guard data != nil else {  return }
                 DispatchQueue.main.async {
+                    alertModel.alertTitle = "Success!"
+                    alertModel.alertMessage = "Files uploaded!"
+                    alertModel.alertPresented = true
+                    
                     reset()
                 }
             }
             
             observation = uploadTask?.progress.observe(\.fractionCompleted, changeHandler: { observationProgress, _ in
                 Task { @MainActor in
-                    if (!showProgress) {
-                        showProgress.toggle()
-                    }
                     progress = observationProgress.fractionCompleted
                 }
             })

@@ -37,8 +37,10 @@ struct AccountDetailView: View {
                     Text("API Key: \(hasAuthenticated ? apiKey : "••••••••••••••••••••")")
                         .frame(minWidth: 200, alignment: .leading)
                     Button(action: {
+                        
                         hasAuthenticated ?
                         hasAuthenticated.toggle() :
+                        
                         authenticate()
                     }, label: {
                         Image(systemName: hasAuthenticated ? "eye" : "eye.slash")
@@ -54,7 +56,6 @@ struct AccountDetailView: View {
                     navigationModel.resetPath()
                     navigationModel.popToRoot()
                 } catch {
-                    print("Failed to delete \(error)")
                 }
             }, label: {
                 Text("Remove Account")
@@ -75,15 +76,17 @@ struct AccountDetailView: View {
         // check whether biometric authentication is possible
         if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
             // it's possible, so go ahead and use it
-            let reason = "We need to unlock your data."
+            let reason = "We use Biometrics to show/hide your API key."
 
             context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, authenticationError in
                 // authentication has now completed
-                if success {
-                    // authenticated successfully
-                    hasAuthenticated = true
-                } else {
-                    // there was a problem
+                DispatchQueue.main.async {
+                    if success {
+                        // authenticated successfully
+                        hasAuthenticated = true
+                    } else {
+                        // there was a problem
+                    }
                 }
             }
         } else {
