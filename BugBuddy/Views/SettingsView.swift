@@ -12,6 +12,7 @@ struct SettingsView: View {
     @Environment(\.modelContext) private var dataModel
     @EnvironmentObject var navigationModel: NavigationStateManager
     @Query(sort: [SortDescriptor(\Account.title)]) private var accounts: [Account]
+    @Environment(\.openURL) var openURL
     
     var body: some View {
         VStack(alignment: .center) {
@@ -37,17 +38,34 @@ struct SettingsView: View {
                     }
                 }
                 Spacer()
-                NavigationLink(value: navigationModel.path) {
-                    Button {
-                        navigationModel.path.append(Account(title: "Placeholder"))
-                    } label: {
-                        Label("Add Account", systemImage: "person.circle")
+                ZStack(alignment: .bottom) {
+                    NavigationLink(value: navigationModel.path) {
+                        Button {
+                            navigationModel.path.append(Account(title: "Placeholder"))
+                        } label: {
+                            Label("Add Account", systemImage: "person.circle")
+                        }
+                        .buttonStyle(NiceButton())
                     }
-                    .buttonStyle(NiceButton())
-                }
-                .buttonStyle(.plain)
-                .navigationDestination(for: Account.self) { _ in
-                    AddNewAccountView()
+                    .buttonStyle(.plain)
+                    .navigationDestination(for: Account.self) { _ in
+                        AddNewAccountView()
+                    }
+                    HStack {
+                        Spacer()
+                        Button(action: {
+                            openURL(URL(string: "https://codedaddys.com")!)
+                        }, label: {
+                            Image("logo")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 26)
+                                .padding(12)
+                                .background(Color.yellow.opacity(0.9))
+                                .clipShape(Circle())
+                        })
+                        .buttonStyle(.plain)
+                    }
                 }
             }
         }
