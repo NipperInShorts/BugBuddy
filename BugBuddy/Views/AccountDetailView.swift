@@ -31,8 +31,17 @@ struct AccountDetailView: View {
                     .font(.title)
                     .padding(.bottom)
                 HStack(alignment: .center) {
-                    Text("API Key: \(hasAuthenticated ? apiKey : "••••••••••••••••••••")")
-                        .frame(minWidth: 200, alignment: .leading)
+                    HStack {
+                        Text("API Key: ")
+                            .textSelection(.disabled)
+                        if (hasAuthenticated) {
+                            Text(apiKey)
+                                .textSelection(.enabled)
+                        } else {
+                            Text("••••••••••••••••••••")
+                        }
+                    }
+                    .frame(minWidth: 200, alignment: .leading)
                     Button(action: {
                         
                         hasAuthenticated ?
@@ -76,12 +85,12 @@ struct AccountDetailView: View {
     func authenticate() {
         let context = LAContext()
         var error: NSError?
-
+        
         // check whether biometric authentication is possible
         if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
             // it's possible, so go ahead and use it
             let reason = "We use Biometrics to show/hide your API key."
-
+            
             context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason) { success, authenticationError in
                 // authentication has now completed
                 DispatchQueue.main.async {
