@@ -191,7 +191,7 @@ struct UploadView: View {
                 }
                 guard data != nil else {  return }
                 DispatchQueue.main.async {
-                    alertModel.alertTitle = "Success!"
+                    alertModel.alertTitle = "All done!"
                     alertModel.alertMessage = "Files uploaded!"
                     alertModel.alertPresented = true
                     
