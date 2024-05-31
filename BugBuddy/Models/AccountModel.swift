@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftData
 
 enum AccountType: Codable {
     case bugsnag
@@ -21,16 +22,35 @@ enum KeychainError: Error {
     case unhandledError(status: OSStatus)
 }
 
-struct Account: Identifiable, Hashable, Codable {
+@Model
+class Account: Codable {
+    
+    enum CodingKeys: CodingKey {
+        case id, title, type
+    }
     
     var title: String
-    let id: UUID
-    let type: AccountType
+    @Attribute(.unique) let id: UUID
+    var type: AccountType
     
     init(title: String, type: AccountType = .bugsnag) {
         self.title = title
         self.id = UUID()
         self.type = type
+    }
+    
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(UUID.self, forKey: .id)
+        title = try container.decode(String.self, forKey: .title)
+        type = try container.decode(AccountType.self, forKey: .type)
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(title, forKey: .title)
+        try container.encode(type, forKey: .type)
     }
     
     static func examples() -> [Account] {
@@ -99,40 +119,6 @@ extension Account {
     
     static var emptyAccount: Account {
         Account(title: "")
-    }
-    
-}
-
-class DataModel: ObservableObject {
-    
-    @Published var accounts: [Account] = []
-    
-    init(accounts: [Account] = []) {
-        self.accounts = accounts
-    }
-    
-    func addAccount(for account: Account) {
-        accounts.append(account)
-    }
-    
-    func addAccount(for account: Account) -> Account? {
-        accounts.append(account)
-        
-        return accounts.first {
-            $0.id == account.id
-        }
-    }
-    
-    func updateAccount(for account: Account) {
-        if let index = accounts.firstIndex(of: account) {
-            accounts[index] = account
-        }
-    }
-    
-    func removeAccount(for account: Account) {
-        accounts.removeAll {
-            $0.id == account.id
-        }
     }
     
 }

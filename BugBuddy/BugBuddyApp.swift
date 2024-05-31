@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct BugBuddy: App {
@@ -16,6 +17,9 @@ struct BugBuddy: App {
                 .frame(minWidth: 500, minHeight: 500)
             #endif
         }
+        .modelContainer(for: [
+            Account.self
+        ])
         #if os(macOS)
         .commands {
             SidebarCommands()

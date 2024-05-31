@@ -16,9 +16,8 @@ class AlertView: ObservableObject {
 }
 
 struct UploadView: View {
-    
+    @Environment(\.modelContext) private var dataModel
     @EnvironmentObject var navigationState: NavigationStateManager
-    @EnvironmentObject var dataModel: DataModel
     
     @ObservedObject private var alertModel = AlertView()
     
@@ -253,5 +252,5 @@ extension NSMutableData {
 #Preview {
     UploadView()
         .environmentObject(NavigationStateManager())
-        .environmentObject(DataModel())
+        .modelContainer(for: [Account.self])
 }

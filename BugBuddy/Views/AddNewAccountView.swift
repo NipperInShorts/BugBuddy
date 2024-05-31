@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct AddNewAccountView: View {
-    
+    @Environment(\.modelContext) private var dataModel
     @State private var account = Account.emptyAccount
-    @EnvironmentObject var dataModel: DataModel
+
     @EnvironmentObject var navigationModel: NavigationStateManager
     @State private var apiKey: String = ""
     
@@ -33,14 +33,14 @@ struct AddNewAccountView: View {
             }
             .onSubmit {
                 if (!apiKey.isEmpty) {
-                    if let account = dataModel.addAccount(for: account) {
-                        do {
-                            try account.saveApiKey(for: apiKey, service: "bugsnag", account: account.title)
-                        } catch {
-                        }
-                        navigationModel.navigateTo(account: account)
-                    }
+                    dataModel.insert(account)
                     
+                    do {
+                        try dataModel.save()
+                        try account.saveApiKey(for: apiKey, service: "bugsnag", account: account.title)
+                    } catch {
+                    }
+                    navigationModel.navigateTo(account: account)
                 }
             }
             Spacer()
@@ -58,6 +58,6 @@ struct AddNewAccountView: View {
         AddNewAccountView()
     }
     .environmentObject(NavigationStateManager())
-    .environmentObject(DataModel())
+    .modelContainer(for: [Account.self])
     
 }

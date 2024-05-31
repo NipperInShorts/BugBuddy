@@ -6,22 +6,22 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct SidebarView: View {
-    
+    @Environment(\.modelContext) private var dataModel
     @EnvironmentObject var navigationManager: NavigationStateManager
-    @EnvironmentObject var dataModel: DataModel
-    
+    @Query(sort: [SortDescriptor(\Account.title)]) private var accounts: [Account]
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             List(selection: $navigationManager.selectionState) {
                 Section(header: Text("Connected Accounts")) {
-                    ForEach(dataModel.accounts, id:\.id) { account in
+                    ForEach(accounts, id:\.id) { account in
                         Text(account.title)
                             .tag(SelectionState.accounts(account))
                     }
-                    if (dataModel.accounts.isEmpty) {
+                    if (accounts.isEmpty) {
                         Text("Add accounts below")
                     }
                 }
@@ -47,5 +47,5 @@ struct SidebarView: View {
 #Preview {
     SidebarView()
         .environmentObject(NavigationStateManager())
-        .environmentObject(DataModel())
+        .modelContainer(for: [Account.self])
 }

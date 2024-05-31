@@ -6,13 +6,13 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct AccountListView: View {
-    
-    @EnvironmentObject var dataModel: DataModel
+    @Query(sort: [SortDescriptor(\Account.title)]) private var accounts: [Account]
     
     var body: some View {
-        List(dataModel.accounts) { account in
+        List(accounts) { account in
             NavigationLink {
                 AccountDetailView(account: account)
             } label: {
@@ -25,5 +25,5 @@ struct AccountListView: View {
 
 #Preview {
     AccountListView()
-        .environmentObject(DataModel(accounts: Account.examples()))
+        .modelContainer(for: [Account.self])
 }

@@ -9,8 +9,7 @@ import SwiftUI
 import LocalAuthentication
 
 struct AccountDetailView: View {
-    
-    @EnvironmentObject var dataModel: DataModel
+    @Environment(\.modelContext) private var dataModel
     @EnvironmentObject var navigationModel: NavigationStateManager
     @State private var apiKey: String = ""
     @State private var hasAuthenticated: Bool = false
@@ -56,7 +55,8 @@ struct AccountDetailView: View {
             Button(action: {
                 do {
                     try account.deleteApiKey(account: account.title, service: "bugsnag")
-                    dataModel.removeAccount(for: account)
+                    dataModel.delete(account)
+                    try dataModel.save()
                     navigationModel.resetPath()
                     navigationModel.popToRoot()
                 } catch {
@@ -107,5 +107,5 @@ struct AccountDetailView: View {
         AccountDetailView(account: Account.examples().first!)
     }
     .environmentObject(NavigationStateManager())
-    .environmentObject(DataModel())
+    .modelContainer(for: [Account.self])
 }

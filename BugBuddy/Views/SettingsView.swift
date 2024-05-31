@@ -6,11 +6,12 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct SettingsView: View {
-    
-    @EnvironmentObject var dataModel: DataModel
+    @Environment(\.modelContext) private var dataModel
     @EnvironmentObject var navigationModel: NavigationStateManager
+    @Query(sort: [SortDescriptor(\Account.title)]) private var accounts: [Account]
     
     var body: some View {
         VStack(alignment: .center) {
@@ -24,7 +25,7 @@ struct SettingsView: View {
             }
             
             NavigationStack(path: $navigationModel.path) {
-                if (!dataModel.accounts.isEmpty) {
+                if (!accounts.isEmpty) {
                     AccountListView()
                         .scrollContentBackground(.hidden)
                 } else {
@@ -74,6 +75,6 @@ extension Color {
 
 #Preview {
     SettingsView()
-        .environmentObject(DataModel(accounts: Account.examples()))
+        .modelContainer(for: [Account.self])
         .environmentObject(NavigationStateManager())
 }

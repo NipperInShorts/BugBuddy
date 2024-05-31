@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct ContentView: View {
-    
+    @Environment(\.modelContext) private var dataModel
     @State private var selectedAccount: String?
     @State private var selectionState: SelectionState?
     
     @StateObject var navigationStateManager = NavigationStateManager()
-    @StateObject var dataModel = DataModel()
+    
     @SceneStorage("navigationState") var navigationStateData: Data?
     
     var body: some View {
@@ -23,7 +23,6 @@ struct ContentView: View {
             DetailView()
         }
         .environmentObject(navigationStateManager)
-        .environmentObject(dataModel)
         .onAppear {
             navigationStateManager.data = navigationStateData
         }
