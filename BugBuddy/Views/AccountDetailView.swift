@@ -70,7 +70,7 @@ struct AccountDetailView: View {
             getApiKey()
         }
         .padding()
-        .navigationTitle(account.title)
+        .navigationTitle("Accounts")
     }
     
     func authenticate() {
