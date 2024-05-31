@@ -45,6 +45,7 @@ struct AddNewAccountView: View {
             }
             Spacer()
         }
+        .navigationTitle("Accounts")
         .padding()
         Spacer()
     }
