@@ -30,7 +30,7 @@ class Account: Codable {
     }
     
     var title: String
-    @Attribute(.unique) let id: UUID
+    @Attribute(.unique) var id: UUID
     var type: AccountType
     
     init(title: String, type: AccountType = .bugsnag) {
@@ -60,6 +60,7 @@ class Account: Codable {
         ]
     }
     
+
     func getApiKey(service: String = "bugsnag", account: String) throws -> String {
         let query: [String: Any] = [
             kSecAttrService as String: service,
