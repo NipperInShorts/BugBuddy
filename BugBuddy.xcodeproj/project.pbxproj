@@ -33,6 +33,7 @@
 		A5BEE8E82BF656660043C19E /* AccountDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDetailView.swift; sourceTree = "<group>"; };
 		A5BEE8EA2BF6572E0043C19E /* AddNewAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewAccountView.swift; sourceTree = "<group>"; };
 		A5BEE8EC2BF68B580043C19E /* AccountListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountListView.swift; sourceTree = "<group>"; };
+		A5DD75652C908B8D00272B64 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		A5EF6FCE2BF2610E0014F79E /* UploadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadView.swift; sourceTree = "<group>"; };
 		A5EF6FD12BF3A0BC0014F79E /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
 		A5EF6FD42BF460900014F79E /* NavigationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationModel.swift; sourceTree = "<group>"; };
@@ -55,6 +56,7 @@
 		A53741552BED3ED700FB81B3 = {
 			isa = PBXGroup;
 			children = (
+				A5DD75652C908B8D00272B64 /* README.md */,
 				A53741602BED3ED700FB81B3 /* BugBuddy */,
 				A537415F2BED3ED700FB81B3 /* Products */,
 			);
