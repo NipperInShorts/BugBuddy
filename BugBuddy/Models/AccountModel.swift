@@ -55,7 +55,6 @@ class Account: Codable {
     
     static func examples() -> [Account] {
         [
-            Account(title: "TechStyle"),
             Account(title: "Code Daddys"),
         ]
     }
